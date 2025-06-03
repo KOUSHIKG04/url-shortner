@@ -62,8 +62,6 @@ const UrlForm = ({ onUrlShortened }) => {
         onUrlShortened(shortUrl);
       }
     } catch (err) {
-      // Error is already handled by axios interceptor and toast is shown
-      // We can optionally set a local error state if needed
       setError(
         err.customMessage || "An error occurred while shortening the URL"
       );

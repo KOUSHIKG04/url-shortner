@@ -18,15 +18,13 @@ const ShortUrlResult = ({ shortUrl }) => {
     try {
       await navigator.clipboard.writeText(shortUrl);
       setCopied(true);
-      toast.success(
-        "Copied! The shortened URL has been copied to your clipboard."
-      );
+      toast.success("Copied!", {
+        // message: "The shortened URL has been copied to your clipboard.",
+      });
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy text: ", err);
-      toast.error(
-        "Failed to copy the URL. Please try again."
-      );
+      toast.error("Failed to copy the URL. Please try again.");
     }
   };
 

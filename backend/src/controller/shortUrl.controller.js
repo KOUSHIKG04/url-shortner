@@ -1,15 +1,24 @@
 import { findUrlfromShortUrl } from "../dao/shortUrl.js";
-import { shortUrlService } from "../services/shortUrl.service.js";
+import {
+  shortUrlService,
+  shortUrlServiceWithUser,
+} from "../services/shortUrl.service.js";
 import wrapAsync from "../utils/tryCatchWrapper.js";
 
 export const createShortUrl = wrapAsync(async (req, res) => {
-  const { url } = req.body;
+  const { url, slug } = req.body;
 
-  const shortUrl = await shortUrlService(url);
+  let shortUrl;
+
+  if (req.user) {
+    shortUrl = await shortUrlServiceWithUser(url, req.user.id, slug);
+  } else {
+    shortUrl = await shortUrlService(url);
+  }
 
   res.json({
     success: true,
-    ShortUrl: `${process.env.BASE_URL}/api/v1/${shortUrl}`,
+    ShortUrl: `${process.env.BASE_URL}/api/v1/create/${shortUrl}`,
   });
 });
 
